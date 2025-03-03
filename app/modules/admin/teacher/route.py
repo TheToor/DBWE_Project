@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
+from functools import wraps
 
 from app.models.User import User
 from app.modules.school.controller import SchoolController
@@ -9,13 +10,25 @@ from .controller import TeacherController
 teacher_admin_bp = Blueprint('admin_teacher', __name__)
 teacher_controller = TeacherController()
 school_controller = SchoolController()
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_admin:
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 @teacher_admin_bp.route('/', methods=['GET'])
+@login_required
+@admin_required
 def index():
     teachers = teacher_controller.index()
     return render_template("admin/teacher/index.html", teachers=teachers)
 
 @teacher_admin_bp.route('/edit/<int:id>', methods=['GET'])
 @login_required
+@admin_required
 def edit(id):
     teacher:User = teacher_controller.get(id)
     schools = school_controller.index()
@@ -27,6 +40,7 @@ def edit(id):
 
 @teacher_admin_bp.route('/edit/<int:id>', methods=['POST'])
 @login_required
+@admin_required
 def edit_post(id):
     teacher:User = teacher_controller.get(id)
     if(teacher is None):

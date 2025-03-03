@@ -5,9 +5,11 @@
     <li><a href="{{ url_for('school.index') }}">Schools</a></li>
     <li><a href="{{ url_for('teacher.index') }}">Teachers</a></li>
   </ul>
+  {% if current_user.is_admin %}
   <p class="menu-label">Administration</p>
   <ul class="menu-list">
     <li><a href="{{ url_for('admin_school.index') }}">Manage Schools</a></li>
     <li><a href="{{ url_for('admin_teacher.index') }}">Manage Teachers</a></li>
   </ul>
+  {% endif %}
 </aside>
