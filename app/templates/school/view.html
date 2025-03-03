@@ -17,7 +17,7 @@ View Ratings for school {{ school.name }}
             <div class="cell">
                 <div class="card">
                     <header class="card-header">
-                        <p class="card-header-title">{{ rating.rating }} / 5</p>
+                        <input class="rating" type="range" value="{{ rating.rating }}" style="--value:{{ rating.rating }}" readonly>
                     </header>
 
                     <div class="card-content">

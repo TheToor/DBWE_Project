@@ -17,7 +17,7 @@ View rating of {{ teacher.name }}
             <div class="cell">
                 <div class="card">
                     <header class="card-header">
-                        <p class="card-header-title">{{ rating.rating }}/5 @ {{ rating.school.name }}</p>
+                        <input class="rating" type="range" value="{{ rating.rating }}" style="--value:{{ rating.rating }}" readonly>
                     </header>
 
                     <div class="card-content">
