@@ -4,10 +4,7 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
 
-class AuthenticationController:
-    def index(self):
-        return {'message':'Hello, World!'}
-    
+class AuthenticationController:    
     def try_create_user(self, email, name, password):
         user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none()
         if user is not None:
