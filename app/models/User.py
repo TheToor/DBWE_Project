@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List
 from flask_login import UserMixin
 from sqlalchemy import Boolean, Column, Integer, String
@@ -6,6 +7,7 @@ from sqlalchemy.orm import relationship
 from app.db.db import db
 from app.models.SchoolTeachers import school_teachers
 
+@dataclass
 class User(db.Model, UserMixin):
     __tablename__ = "user"
 

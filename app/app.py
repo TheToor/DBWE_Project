@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 from app.config.config import get_config_by_name
 from app.initialize_functions import initialize_route, initialize_db, initialize_swagger
 from flask_login import LoginManager
@@ -38,5 +39,11 @@ def create_app(config=None) -> Flask:
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+    
+    jwt = JWTManager(app)
+
+    @jwt.unauthorized_loader
+    def my_invalid_token_callback(expired_token):
+        return make_response(jsonify(message='Missing Authorization Header'), 401)
 
     return app

@@ -1,7 +1,9 @@
+from dataclasses import dataclass
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped
 from app.db.db import db
 
+@dataclass
 class TeacherRating(db.Model):
     __tablename__ = "teacher_rating"
 

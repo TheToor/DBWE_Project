@@ -9,6 +9,10 @@ from flasgger import Swagger
 from app.db.db import db
 from app.modules.user.auth.route import auth_bp
 
+from app.modules.api.auth.route import auth_api_bp
+from app.modules.api.school.route import school_api_bp
+from app.modules.api.teacher.route import teacher_api_bp
+
 
 def initialize_route(app: Flask):
     with app.app_context():
@@ -23,6 +27,11 @@ def initialize_route(app: Flask):
 
         # Auth Routes
         app.register_blueprint(auth_bp, url_prefix="/user/auth")
+
+        # API Routes
+        app.register_blueprint(auth_api_bp, url_prefix="/api/auth")
+        app.register_blueprint(school_api_bp, url_prefix="/api/school")
+        app.register_blueprint(teacher_api_bp, url_prefix="/api/teacher")
 
         # Error handling
         app.register_error_handler(Exception, error_handler)

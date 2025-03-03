@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import Mapped
@@ -5,6 +6,7 @@ from sqlalchemy.orm import relationship
 from app.db.db import db
 from app.models.SchoolTeachers import school_teachers
 
+@dataclass
 class School(db.Model):
     __tablename__ = "school"
 
