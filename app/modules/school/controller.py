@@ -14,7 +14,7 @@ class SchoolController:
     def rate(self, id, form: RateSchoolForm):
         school = self.get(id)
 
-        existing_rating = SchoolRating.query.where(SchoolRating.school_id == school.id and SchoolRating.user_id == current_user.id).first()
+        existing_rating = SchoolRating.query.where(SchoolRating.school_id == school.id, SchoolRating.user_id == current_user.id).first()
         if existing_rating is None:
             new_rating = SchoolRating(rating=form.rating.data, comment=form.comment.data)
             new_rating.user = current_user

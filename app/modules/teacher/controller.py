@@ -21,7 +21,7 @@ class TeacherController:
         teacher = self.get(teacher_id)
         school = School.query.get_or_404(school_id)
 
-        existing_rating = TeacherRating.query.where(TeacherRating.school_id == school_id and TeacherRating.teacher_id == teacher_id).first()
+        existing_rating = TeacherRating.query.where(TeacherRating.school_id == school_id, TeacherRating.teacher_id == teacher_id).first()
         if existing_rating is None:
             new_rating = TeacherRating(rating=form.rating.data, comment=form.comment.data)
             new_rating.teacher = teacher
