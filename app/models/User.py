@@ -15,6 +15,8 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = Column(String(60))
     is_active: Mapped[bool] = Column(Boolean(), default=True)
 
+    is_admin: Mapped[bool] = Column(Boolean(), default=False)
+
     is_teacher: Mapped[bool] = Column(Boolean(), default=False)
     schools = relationship("School", secondary=school_teachers, back_populates="teachers")
 
