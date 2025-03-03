@@ -1,0 +1,43 @@
+{% extends "app.html" %}
+
+{% block title %}
+View Teachers
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <h1 class="title">View Teachers</h1>
+    <h2 class="subtitle">See and rate all teachers!</h2>
+
+    {% if teachers|length == 0 %}
+    <h1>There are no teachers!</h1>
+    {% else %}
+        <div class="grid is-col-min-10">
+        {% for teacher in teachers %}
+            <div class="cell">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">{{ teacher.name }}</p>
+                    </header>
+
+                    <div class="card-content">
+                        <div class="content">
+                            <p>{{ teacher.email }}</p>
+                            <p>Rating: {{ teacher.calculate_rating() }}</p>
+                        </div>
+                    </div>
+
+                    <footer class="card-footer">
+                        <a href="{{ url_for('teacher.view', teacher_id=teacher.id) }}" class="card-footer-item">View ratings</a>
+                        {% for school in teacher.schools %}
+                        <a href="{{ url_for('teacher.rate', teacher_id=teacher.id, school_id=school.id) }}" class="card-footer-item">Rate Teacher @ {{ school.name }}</a>
+                        {% endfor %}
+                    </footer>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

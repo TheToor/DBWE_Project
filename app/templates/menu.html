@@ -1,0 +1,13 @@
+<aside
+  class="menu column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+  <p class="menu-label">General</p>
+  <ul class="menu-list">
+    <li><a href="{{ url_for('school.index') }}">Schools</a></li>
+    <li><a href="{{ url_for('teacher.index') }}">Teachers</a></li>
+  </ul>
+  <p class="menu-label">Administration</p>
+  <ul class="menu-list">
+    <li><a href="{{ url_for('admin_school.index') }}">Manage Schools</a></li>
+    <li><a href="{{ url_for('admin_teacher.index') }}">Manage Teachers</a></li>
+  </ul>
+</aside>

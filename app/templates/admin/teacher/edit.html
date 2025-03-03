@@ -1,0 +1,44 @@
+{% extends "app.html" %}
+
+{% block title %}
+    Edit Teacher {{ teacher.name }}
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<section class="section">
+    <h1 class="title">Edit Teacher {{ teacher.name }}</h1>
+
+    <div class="box">
+        <form method="POST" action="{{ url_for('admin_teacher.edit', id=teacher.id) }}">
+        {% for school in schools %}
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="{{ school.id }}" value="{{ school.id }}"
+                {% if school in teacher.schools %}
+                    checked
+                {% endif %}
+                />
+                {{ school.name }} ({{ school.address }})
+            </label>
+        </div>
+        {% endfor %}
+        
+        <div class="is-flex">
+            <a href="{{ url_for('admin_teacher.index') }}" class="button is-danger is-info is-fullwidth mr-1">
+                Cancel
+            </a>
+            <button class="button is-block is-info is-fullwidth ml-1">
+                Save
+            </button>
+        </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

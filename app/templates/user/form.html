@@ -1,0 +1,11 @@
+{% extends "app.html" %}
+
+{% block content %}
+<section class="hero is-primary is-fullheight-with-navbar" style="width: 100%;">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            {% block form_content %} {% endblock %}
+        </div>
+    </div>
+</section>
+{% endblock %}

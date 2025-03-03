@@ -1,0 +1,45 @@
+{% extends "app.html" %}
+
+{% block title %}
+View Schools
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <h1 class="title">View Schools</h1>
+    <h2 class="subtitle">See and rate all schools!</h2>
+
+    {% if schools|length == 0 %}
+    <h1>There are no Schools!</h1>
+    {% else %}
+        <div class="grid is-col-min-10">
+        {% for school in schools %}
+            <div class="cell">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">{{ school.name }}</p>
+                    </header>
+
+                    <div class="card-content">
+                        <div class="content">
+                            <p>{{ school.address }}</p>
+                            <p>{{ school.phone }}</p>
+                            <p>{{ school.email }}</p>
+                            <a href="{{ school.website }}" target="_blank">{{ school.website }}</a>
+                            <p>Rating: {{ school.calculate_rating() }}</p>
+                        </div>
+                    </div>
+
+                    <footer class="card-footer">
+                        <a href="{{ url_for('school.view', id=school.id) }}" class="card-footer-item">View Ratings</a>
+                        <a href="{{ url_for('school.rate', id=school.id) }}" class="card-footer-item">Rate School</a>
+                        <a href="{{ url_for('teacher.index', school_id=school.id) }}" class="card-footer-item">Rate Teachers</a>
+                    </footer>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "app.html" %}
+
+{% block title %}
+View rating of {{ teacher.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <h1 class="title">View rating of {{ teacher.name }}</h1>
+
+    {% if teacher.my_teacher_ratings|length == 0 %}
+    <h1>There are no ratings for teacher {{ teacher.name }}!</h1>
+    {% else %}
+        <div class="grid is-col-min-10">
+        {% for rating in teacher.my_teacher_ratings %}
+            <div class="cell">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">{{ rating.rating }}/5 @ {{ rating.school.name }}</p>
+                    </header>
+
+                    <div class="card-content">
+                        <div class="content">
+                            <blockquote>{{ rating.comment }}</blockquote>
+                            <p>- {{ rating.user.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

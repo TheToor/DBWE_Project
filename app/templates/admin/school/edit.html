@@ -1,0 +1,68 @@
+{% extends "app.html" %}
+
+{% block title %}
+    {% if form.isNew %}
+        New School
+    {% else %}
+        Edit School {{ form.name.data }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<div class="box">
+    <form method="POST" action="{{ url_for('admin_school.new',) if form.isNew else url_for('admin_school.edit', id=form.id.data) }}">
+    {{ form.hidden_tag() }}
+
+    <div class="field">
+        <label class="label">{{ form.name.label }}</label>
+        <div class="control">
+        {{ form.name(class_="input", placeholder="Name") }}
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">{{ form.address.label }}</label>
+        <div class="control">
+        {{ form.address(class_="input", placeholder="Address") }}
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">{{ form.phone.label }}</label>
+        <div class="control">
+        {{ form.phone(class_="input", placeholder="Phone") }}
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">{{ form.email.label }}</label>
+        <div class="control">
+        {{ form.email(class_="input", placeholder="Email") }}
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">{{ form.website.label }}</label>
+        <div class="control">
+        {{ form.website(class_="input", placeholder="Website") }}
+        </div>
+    </div>
+    
+    <div class="is-flex">
+        <a href="{{ url_for('admin_school.index') }}" class="button is-danger is-info is-fullwidth mr-1">
+            Cancel
+        </a>
+        <button class="button is-block is-info is-fullwidth ml-1">
+            Save
+        </button>
+    </div>
+    </form>
+</div>
+{% endblock %}

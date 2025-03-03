@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %} {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          {% if not current_user.is_authenticated %}
+          <a href="{{ url_for('auth.login') }}" class="navbar-item">
+            Login
+          </a>
+          <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+            Sign Up
+          </a>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+            Logout
+          </a>
+          {% endif %}
+          <div class="navbar-item">
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu-theme">
+                  <span>Theme</span>
+                  <span class="icon">
+                    <i class="bx bx-moon"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu-theme" role="menu">
+                <div class="dropdown-content">
+                  <a id="button-theme-light" class="dropdown-item" onclick="toggleTheme(false)">
+                    <span class="icon">
+                      <i class="bx bx-sun"></i>
+                    </span>
+                    <span>Light</span>
+                  </a>
+                  <a id="button-theme-dark" class="dropdown-item" onclick="toggleTheme(true)">
+                    <span class="icon">
+                      <i class="bx bx-moon"></i>
+                    </span>
+                    <span>Dark</span>
+                  </a>
+                  <a id="button-theme-system" class="dropdown-item" onclick="toggleTheme()">
+                    <span class="icon">
+                      <i class="bx bx-home-smile"></i>
+                    </span>
+                    <span>System</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="main-content columns is-fullheight">
+
+      {% if current_user.is_authenticated %}
+      {% include 'menu.html' %}
+      <div class="container column is-10 p-4">
+      {% endif %}
+
+      {% block content %} {% endblock %}
+
+      {% if current_user.is_authenticated %}
+      </div>
+      {% endif %}  
+      
+    </section>
+
+    <script type="text/javascript">
+      function toggleTheme(isDark) {
+        const root = document.documentElement;
+        const isDarkMode = isDark !== undefined ? isDark : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        document.getElementById("button-theme-system").classList.remove('is-active');
+        document.getElementById("button-theme-dark").classList.remove('is-active');
+        document.getElementById("button-theme-light").classList.remove('is-active');
+
+        if(isDark === undefined) {
+          document.getElementById("button-theme-system").classList.add('is-active');
+          document.cookie = "theme=system; path=/;";
+        }
+        else if(isDark) {
+          document.getElementById("button-theme-dark").classList.add('is-active');
+          document.cookie = "theme=dark; path=/;";
+        }
+        else {
+          document.getElementById("button-theme-light").classList.add('is-active');
+          document.cookie = "theme=light; path=/;";
+        }
+
+        if(isDarkMode) {
+          root.classList.add('theme-dark');
+          root.classList.remove('theme-light');
+        } else {
+          root.classList.remove('theme-dark');
+          root.classList.add('theme-light');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const theme = document.cookie.replace(/(?:(?:^|.*;\s*)theme\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        toggleTheme(theme === 'dark' ? true : theme === 'light' ? false : undefined);
+      });
+    </script>
+  </body>
+</html>

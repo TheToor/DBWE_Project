@@ -1,0 +1,46 @@
+{% extends "app.html" %}
+
+{% block title %}
+Manage Teachers
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <h1 class="title">Manage Teachers</h1>
+
+    {% if teachers|length == 0 %}
+    <h1>There are no teachers!</h1>
+    {% else %}
+    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Is Teacher?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.email }}</td>
+                <td>
+                    <input type="checkbox"
+                    {% if teacher.is_teacher %}
+                    checked
+                    {% endif %}
+                    disabled />
+                </td>
+                <td>
+                    <a href="{{ url_for('admin_teacher.edit', id=teacher.id) }}" class="button is-info">Edit assigned Schools</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</section>
+
+{% endblock %}

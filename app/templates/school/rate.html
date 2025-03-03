@@ -1,0 +1,43 @@
+{% extends "app.html" %}
+
+{% block title %}
+    New rating for school {{ school.name }}
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<div class="box">
+    <form method="POST" action="{{ url_for('school.rate', id=school.id) }}">
+    {{ form.hidden_tag() }}
+
+    <div class="field">
+        <label class="label">{{ form.rating.label }}</label>
+        <div class="control">
+        {{ form.rating(class_="input") }}
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">{{ form.comment.label }}</label>
+        <div class="control">
+        {{ form.comment(class_="textarea", placeholder="Comment") }}
+        </div>
+    </div>
+    
+    <div class="is-flex">
+        <a href="{{ url_for('school.index') }}" class="button is-danger is-info is-fullwidth mr-1">
+            Cancel
+        </a>
+        <button class="button is-block is-info is-fullwidth ml-1">
+            Save
+        </button>
+    </div>
+    </form>
+</div>
+{% endblock %}
